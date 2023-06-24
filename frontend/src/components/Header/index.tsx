@@ -1,0 +1,142 @@
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
+import { uperCaseFirstLetter } from "../../utils";
+import { logout } from "../../redux/features/Auth/authSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/app/store";
+
+const Index = () => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const { user } = useAppSelector((state) => state.auth);
+
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const avatar = user?.avatar;
+  const token = user?.token;
+  const admin = user?.isAdmin;
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/login");
+  };
+
+  const handleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  return (
+    <header className='d-flex flex-wrap align-items-center justify-content-center justify-content-between py-3 mb-4 border-bottom'>
+      <Link
+        to='/'
+        className='d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none'
+      >
+        <img
+          width='64'
+          height='64'
+          src='https://img.icons8.com/external-becris-lineal-color-becris/64/external-recipe-kitchen-cooking-becris-lineal-color-becris-1.png'
+          alt='external-recipe-kitchen-cooking-becris-lineal-color-becris-1'
+        />
+      </Link>
+
+      <div className='col-md-3 text-end'>
+        <form method='POST' action='/search'>
+          <input
+            type='search'
+            name='searchTerm'
+            className='form-control'
+            placeholder='Search...'
+            aria-label='Search'
+          />
+        </form>
+      </div>
+      <ul className='nav col-12 col-md-auto mb-2 justify-content-center mb-md-0'>
+        <li>
+          <Link to='/' className='nav-link px-2 link-secondary'>
+            Home
+          </Link>
+        </li>
+        <li>
+          <Link
+            to='/saved-recipes'
+            className='nav-link px-2 link-secondary position-relative'
+          >
+            Saved-Recipes
+          </Link>
+        </li>
+      </ul>
+      {user?.name && uperCaseFirstLetter(user.name)}
+      <div className='dropdown'>
+        <Link
+          to='/'
+          className='d-block link-dark text-decoration-none dropdown-toggle'
+          id='dropdownUser1'
+          data-bs-toggle='dropdown'
+          aria-expanded='false'
+          onClick={handleDropdown}
+        >
+          {user ? (
+            <img
+              src={avatar}
+              alt='mdo'
+              width='32'
+              height='32'
+              className='rounded-circle'
+            />
+          ) : (
+            "Cooking App"
+          )}
+        </Link>
+        <ul
+          className='dropdown-menu text-small'
+          aria-labelledby='dropdownUser1'
+        >
+          {token ? (
+            <>
+              <li>
+                <Link className='dropdown-item' to='/add-recipe'>
+                  Add Recipe
+                </Link>
+              </li>
+              <li>
+                <Link className='dropdown-item' to='/saved-recipes'>
+                  Saved Recipes
+                </Link>
+              </li>
+              {admin && (
+                <li>
+                  <Link to='/categories' className='dropdown-item'>
+                    Categories
+                  </Link>
+                </li>
+              )}
+              <li>
+                <hr className='dropdown-divider' />
+              </li>
+              <li>
+                <Link className='dropdown-item' to='/' onClick={handleLogout}>
+                  Sign out
+                </Link>
+              </li>
+            </>
+          ) : (
+            <>
+              <li>
+                <Link to='/login' className='dropdown-item' type='button'>
+                  Login
+                </Link>
+              </li>
+              <li>
+                <Link to='/register' className='dropdown-item'>
+                  Register
+                </Link>
+              </li>
+            </>
+          )}
+        </ul>
+      </div>
+    </header>
+  );
+};
+
+export default Index;
