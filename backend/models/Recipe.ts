@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
 
 import ReviewModel from "./Review";
-import { IRecipe } from "../interfaces/rcipeInterface";
+import { IRecipe } from "../interfaces/recipeInterface";
 
 const recipeSchema = new Schema<IRecipe>(
   {

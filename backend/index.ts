@@ -8,6 +8,7 @@ dotenv.config();
 import { connectDB } from "./config/db";
 import userRoutes from "./routes/Auth.routes";
 import uploadRoutes from "./routes/Upload.routes";
+import recipeRoutes from "./routes/Recipe.routes";
 import categoryRoutes from "./routes/Category.routes";
 
 import { errorHandler, notFound } from "./middlewares/errorHandler";
@@ -34,6 +35,7 @@ app.get("/", (req, res) => {
 // Routes
 app.use("/api/v1/auth", userRoutes);
 app.use("/api/v1/categories", categoryRoutes);
+app.use("/api/v1/recipes", recipeRoutes);
 app.use("/api/v1/upload", uploadRoutes);
 
 const __dirname = path.resolve();
