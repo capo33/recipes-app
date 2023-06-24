@@ -27,6 +27,7 @@ const Index = () => {
 
   return (
     <header className='d-flex flex-wrap align-items-center justify-content-center justify-content-between py-3 mb-4 border-bottom'>
+      {/* Logo */}
       <Link
         to='/'
         className='d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none'
@@ -39,6 +40,7 @@ const Index = () => {
         />
       </Link>
 
+      {/* Search */}
       <div className='col-md-3 text-end'>
         <form method='POST' action='/search'>
           <input
@@ -50,6 +52,8 @@ const Index = () => {
           />
         </form>
       </div>
+
+      {/* Nav */}
       <ul className='nav col-12 col-md-auto mb-2 justify-content-center mb-md-0'>
         <li>
           <Link to='/' className='nav-link px-2 link-secondary'>
@@ -65,7 +69,12 @@ const Index = () => {
           </Link>
         </li>
       </ul>
-      {user?.name && uperCaseFirstLetter(user.name)}
+
+      <span className='link-info'>
+        {user?.name && uperCaseFirstLetter(user.name)}
+      </span>
+
+      {/* Dropdown */}
       <div className='dropdown'>
         <Link
           to='/'
@@ -91,22 +100,22 @@ const Index = () => {
           className='dropdown-menu text-small'
           aria-labelledby='dropdownUser1'
         >
-          {token ? (
+          {user ? (
             <>
               <li>
+                <Link className='dropdown-item' to='/profile'>
+                  Profile
+                </Link>
                 <Link className='dropdown-item' to='/add-recipe'>
                   Add Recipe
                 </Link>
               </li>
               <li>
-                <Link className='dropdown-item' to='/saved-recipes'>
-                  Saved Recipes
-                </Link>
               </li>
               {admin && (
                 <li>
-                  <Link to='/categories' className='dropdown-item'>
-                    Categories
+                  <Link to='/add-category' className='dropdown-item'>
+                    Add Category
                   </Link>
                 </li>
               )}

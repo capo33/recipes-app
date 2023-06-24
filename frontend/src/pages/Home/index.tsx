@@ -45,7 +45,7 @@ const Index = () => {
               height='510'
               className='d-block mx-lg-auto img-fluid'
               loading='lazy'
-              alt='Cooking With Node.js'
+              alt='Cooking with love'
             />
           </div>
 
@@ -61,18 +61,18 @@ const Index = () => {
             </p>
 
             <div className='d-grid gap-2 d-md-flex justify-content-md-start'>
-              <a
-                href='/explore-latest'
+              <Link
+                to='/explore-latest'
                 className='btn btn-primary btn-dark btn-lg px-4 me-md-2'
               >
                 Explore Latest
-              </a>
-              <a
-                href='/explore-random'
+              </Link>
+              <Link
+                to='/explore-random'
                 className='btn btn-outline-secondary btn-lg px-4 me-md-2'
               >
                 Show Random
-              </a>
+              </Link>
             </div>
           </div>
         </div>
