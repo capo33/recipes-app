@@ -7,9 +7,10 @@ export interface Owner {
 }
 
 export interface Category {
-  _id?: string;
   name: string;
-  slug: string;
+  image: string;
+  slug?: string;
+  _id?: string;
 }
 
 

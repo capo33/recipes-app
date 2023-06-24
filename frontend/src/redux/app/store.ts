@@ -3,13 +3,13 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 import authReducer from "../features/Auth/authSlice";
 // import recipeReducer from "../features/Recipe/recipeSlice";
-// import categoryReducer from "../features/Category/categorySlice";
+import categoryReducer from "../features/Category/categorySlice";
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     // recipe: recipeReducer,
-    // category: categoryReducer,
+    category: categoryReducer,
   },
 });
 

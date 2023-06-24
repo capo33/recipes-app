@@ -13,7 +13,7 @@ const Index = () => {
   const navigate = useNavigate();
 
   const avatar = user?.avatar;
-  const token = user?.token;
+  // const token = user?.token;
   const admin = user?.isAdmin;
 
   const handleLogout = () => {

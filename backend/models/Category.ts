@@ -6,12 +6,10 @@ const categorySchema = new Schema<ICategory>(
   {
     name: {
       type: String,
-      required: true,
-    },
+     },
     slug: {
       type: String,
-      required: true,
-    },
+     },
     image: {
       type: String,
     },
