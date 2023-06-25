@@ -3,7 +3,7 @@ import { useAppSelector, useAppDispatch } from "../../redux/app/store";
 import { getAllCategories } from "../../redux/features/Category/categorySlice";
 import { Link } from "react-router-dom";
 
-const Categories = () => {
+const AllCategories = () => {
   const { categories } = useAppSelector((state) => state.category);
   console.log(categories);
 
@@ -13,14 +13,6 @@ const Categories = () => {
   }, [dispatch]);
   return (
     <section className='pb-4 pt-4'>
-      <div className='py-5 text-center'>
-        <h1 className='display-5 fw-bold'>All Categories</h1>
-        <div className='col-lg-6 mx-auto'>
-          <p className='lead'>
-            A collection of recipes from all over the world.
-          </p>
-        </div>
-      </div>
       <div className='row row-cols-2 row-cols-lg-6 g-2 g-lg-3 py-4'>
         {categories.map((category) => (
           <Link
@@ -34,9 +26,20 @@ const Categories = () => {
             <div className='pt-1'>{category.name}</div>
           </Link>
         ))}
+
+        <a href='/categories' className='col text-center category__link'>
+          <div className='category__img shadow'>
+            <img
+              src='img/view-all.jpg'
+              alt='View All Categories'
+              loading='lazy'
+            />
+          </div>
+          <div className='pt-1'>View All</div>
+        </a>
       </div>
     </section>
   );
 };
 
-export default Categories;
+export default AllCategories;

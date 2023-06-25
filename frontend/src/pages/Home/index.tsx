@@ -5,6 +5,8 @@ import { GiRiceCooker } from "react-icons/gi";
 import Landing from "./Landing";
 import { useAppDispatch, useAppSelector } from "../../redux/app/store";
 import Categories from "../../components/Categories/Categories";
+import Recipes from "../Recipe/Recipes";
+import AllCategories from "../Category/AllCategories";
 
 const Index = () => {
   const { user } = useAppSelector((state) => state.auth);
@@ -77,7 +79,8 @@ const Index = () => {
             </div>
           </div>
         </div>
-        <Categories />
+        <AllCategories />
+        <Recipes />
       </div>
     </>
   );

@@ -2,13 +2,13 @@ import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 import authReducer from "../features/Auth/authSlice";
-// import recipeReducer from "../features/Recipe/recipeSlice";
+import recipeReducer from "../features/Recipe/recipeSlice";
 import categoryReducer from "../features/Category/categorySlice";
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
-    // recipe: recipeReducer,
+    recipe: recipeReducer,
     category: categoryReducer,
   },
 });

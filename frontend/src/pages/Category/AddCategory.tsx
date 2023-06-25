@@ -9,9 +9,9 @@ import { Category } from "../../interfaces/RecipeInterface";
 const AddCategory = () => {
   const [categoryData, setCategoryData] = React.useState<Category>({
     name: "",
-    image: ""
+    image: "",
   });
-  
+
   const [uploading, setUploading] = React.useState<boolean>(false);
   const { category } = useAppSelector((state) => state.category);
   const { user } = useAppSelector((state) => state.auth);
@@ -41,7 +41,6 @@ const AddCategory = () => {
 
   // Upload image handler
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    // const file = e.target.files?.[0];
     const file = e?.currentTarget?.files?.[0];
     const formData = new FormData();
     formData.append("image", file as Blob);
@@ -54,10 +53,10 @@ const AddCategory = () => {
         },
       });
       console.log(response.data);
-      
-      setCategoryData({ 
+
+      setCategoryData({
         ...categoryData,
-        image: response.data.image
+        image: response.data.image,
       });
       setUploading(false);
     } catch (error) {
