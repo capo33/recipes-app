@@ -11,6 +11,7 @@ import { getAllCategories } from "../../redux/features/Category/categorySlice";
 import Ingredients from "../../components/RecipeForm/Ingredients";
 import RecipeName from "../../components/RecipeForm/RecipeName";
 import Instructions from "../../components/RecipeForm/Instructions";
+import CookingTime from "../../components/RecipeForm/CookingTime";
 
 const AddRecipe = () => {
   const { user } = useAppSelector((state) => state.auth);
@@ -135,22 +136,16 @@ const AddRecipe = () => {
               </div>
 
               <div className='col-12'>
-                {/* <label htmlFor='description' className='form-label'>
-                  Description
-                </label>
-                <textarea
-                  name='description'
-                  id='description'
-                  className='form-control'
-                  cols={30}
-                  rows={4}
-                ></textarea> */}
                 <Instructions recipe={recipe} handleChange={handleChange} />
               </div>
 
-              <div className='col-12'>
+              <div className='col-6'>
                 <Category recipe={recipe} handleChange={handleChange} />
               </div>
+              <div className='col-6'>
+               <CookingTime recipe={recipe} handleChange={handleChange} />
+              </div>
+
 
               <div className='col-12'>
                 <label htmlFor='image'>Product Image</label>

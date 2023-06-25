@@ -58,7 +58,7 @@ const Ingredients = ({
                 <label htmlFor='add-ingredients'>Ingredients</label>
                 <br />
                 <small>
-                  Example:{" "}
+                  exmaple:{" "}
                   <span className='link-secondary'>
                     Milk, Sugar, Chocolate, Vanilla Extract
                   </span>

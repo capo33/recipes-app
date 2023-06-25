@@ -19,16 +19,14 @@ const Category = ({ recipe, handleChange }: CategoryProps) => {
   }, [dispatch]);
 
   return (
-    <div className='col-4'>
-      <label className='block text-sm font-medium text-gray-700'>
-        Category
-      </label>
+    <div>
+      <label htmlFor='category'>Category</label>
       <select
         id='category'
         name='category'
         value={recipe.category._id}
         onChange={handleChange}
-        className="form-select form-control"
+        className='form-select form-control'
       >
         <option value=''>Select a category</option>
         {categories.map((category) => (
@@ -38,7 +36,6 @@ const Category = ({ recipe, handleChange }: CategoryProps) => {
         ))}
       </select>
     </div>
-    
   );
 };
 
