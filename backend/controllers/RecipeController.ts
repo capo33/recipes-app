@@ -10,7 +10,7 @@ import { IRecipe } from "../interfaces/recipeInterface";
 // @access  Public
 const getAllRecipes = async (req: Request, res: Response) => {
   try {
-    const recipes = await RecipeModel.find({}).populate("owner", "name");
+    const recipes = await RecipeModel.find({}).populate("owner", "name")
     res.status(200).json(recipes);
   } catch (error: unknown | any) {
     res.status(500).json({ message: error.message });

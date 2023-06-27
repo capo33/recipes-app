@@ -18,27 +18,6 @@ const Index = () => {
 
   return (
     <>
-      {/* <section className='bg-white dark:bg-gray-900 mb-5'>
-        <Landing />
-        <h2>
-          <div className='mx-auto px-5'>
-            <div className=' flex justify-between'>
-              <div className='text-indigo-600 flex items-center pb-2 pr-2 border-b-2 border-teal-600 uppercase'>
-                <GiRiceCooker className='w-6 h-6 mr-3' />
-                Recipes
-              </div>
-              <Link to='/' className='font-semibold inline-block'></Link>
-            </div>
-          </div>
-        </h2>
-        <div className='grid grid-cols-1 gap-8 mt-8 md:mt-16 md:grid-cols-2 xl:grid-cols-3 '>
-          {recipes &&
-            recipes?.map((recipe: Recipe) => (
-              <BLogCard key={recipe._id} recipe={recipe} />
-            ))}
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum maiores nam optio mollitia natus aperiam nulla, distinctio commodi! Voluptatem sint doloremque libero ea, nemo vero omnis quaerat aperiam voluptates quos.
-        </div>
-      </section> */}
       <div className='   py-5'>
         <div className='row flex-lg-row-reverse bg-white align-items-center g-5 py-4 mb-4'>
           <div className='col-12 col-lg-6'>

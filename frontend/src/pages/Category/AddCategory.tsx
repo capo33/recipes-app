@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Category } from "../../interfaces/RecipeInterface";
+import Button from "../../components/Button/Button";
 
 const AddCategory = () => {
   const [categoryData, setCategoryData] = React.useState<Category>({
@@ -13,11 +14,9 @@ const AddCategory = () => {
   });
 
   const [uploading, setUploading] = React.useState<boolean>(false);
-  const { category } = useAppSelector((state) => state.category);
   const { user } = useAppSelector((state) => state.auth);
 
   const token = user?.token as string;
-  const userId = user?._id as string;
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -102,7 +101,9 @@ const AddCategory = () => {
               </div>
 
               <div className='col-12'>
-                <label htmlFor='image'>Image</label>
+                <label htmlFor='image' className='form-label'>
+                  Image
+                </label>
                 <input
                   type='file'
                   className='form-control'
@@ -114,9 +115,11 @@ const AddCategory = () => {
               {uploading && <p>Uploading image...</p>}
 
               <div className='col-12'>
-                <button type='submit' className='btn btn-primary'>
-                  Add Category
-                </button>
+                <Button
+                  type='submit'
+                  children='Add Category'
+                  className='btn btn-dark'
+                />
               </div>
             </div>
           </form>

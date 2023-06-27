@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 
-import Category from "../../components/RecipeForm/Category";
-
+import Button from "../../components/Button/Button";
 import { Recipe } from "../../interfaces/RecipeInterface";
-import { useAppDispatch, useAppSelector } from "../../redux/app/store";
-import { getAllCategories } from "../../redux/features/Category/categorySlice";
-import Ingredients from "../../components/RecipeForm/Ingredients";
+import Category from "../../components/RecipeForm/Category";
 import RecipeName from "../../components/RecipeForm/RecipeName";
-import Instructions from "../../components/RecipeForm/Instructions";
 import CookingTime from "../../components/RecipeForm/CookingTime";
+import Ingredients from "../../components/RecipeForm/Ingredients";
+import Instructions from "../../components/RecipeForm/Instructions";
 import UploadPicture from "../../components/RecipeForm/UploadPicture";
+import { createRecipe } from "../../redux/features/Recipe/recipeSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/app/store";
 
 const AddRecipe = () => {
   const { user } = useAppSelector((state) => state.auth);
   const [uploading, setUploading] = useState(false);
   const [inputValue, setInputValue] = useState("");
-  const [recipe, setRecipe] = useState<Recipe>({
+  const recipeData = {
     name: "",
     ingredients: [],
     instructions: "",
@@ -29,7 +29,8 @@ const AddRecipe = () => {
     owner: {
       _id: user?._id as string,
     },
-  });
+  };
+  const [recipe, setRecipe] = useState<Recipe>(recipeData);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -70,19 +71,9 @@ const AddRecipe = () => {
   // Submit handler for form
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // dispatch(createRecipe({ formData: recipe, token }));
+    dispatch(createRecipe({ formData: recipe, token }));
     navigate("/");
-    setRecipe({
-      name: "",
-      ingredients: [],
-      instructions: "",
-      image: "",
-      cookingTime: 0,
-      category: { _id: "", name: "", image: "", slug: "" },
-      owner: {
-        _id: user?._id as string,
-      },
-    });
+    setRecipe(recipeData);
   };
 
   // Upload image handler
@@ -122,7 +113,7 @@ const AddRecipe = () => {
       </div>
       <div className='row justify-content-center'>
         <div className='col-8'>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className='row g-3'>
               <RecipeName recipe={recipe} handleChange={handleChange} />
 
@@ -148,14 +139,7 @@ const AddRecipe = () => {
                 <Category recipe={recipe} handleChange={handleChange} />
               </div>
 
-              <div className='col-12'>
-                {/* <label htmlFor='image'>Product Image</label>
-                <input
-                  type='file'
-                  className='form-control'
-                  name='image'
-                  accept='image/*'
-                /> */}
+              <div className=' '>
                 <UploadPicture
                   handleUpload={handleUpload}
                   uploading={uploading}
@@ -163,9 +147,11 @@ const AddRecipe = () => {
               </div>
 
               <div className='col-12'>
-                <button type='submit' className='btn btn-primary'>
-                  Submit Recipe
-                </button>
+                <Button
+                  children='Add recipe'
+                  type='submit'
+                  className='btn btn-dark'
+                />
               </div>
             </div>
           </form>

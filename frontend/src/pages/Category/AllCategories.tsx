@@ -27,7 +27,7 @@ const AllCategories = () => {
           </Link>
         ))}
 
-        <a href='/categories' className='col text-center category__link'>
+        <Link to='/categories' className='col text-center category__link'>
           <div className='category__img shadow'>
             <img
               src='img/view-all.jpg'
@@ -36,7 +36,7 @@ const AllCategories = () => {
             />
           </div>
           <div className='pt-1'>View All</div>
-        </a>
+        </Link>
       </div>
     </section>
   );
