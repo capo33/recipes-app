@@ -13,6 +13,9 @@ const AllCategories = () => {
   }, [dispatch]);
   return (
     <section className='pb-4 pt-4'>
+      <div className='d-flex mt-2 align-items-center'>
+        <h2>Categories</h2>
+      </div>
       <div className='row row-cols-2 row-cols-lg-6 g-2 g-lg-3 py-4'>
         {categories.map((category) => (
           <Link
