@@ -69,23 +69,22 @@ const unsaveRecipe = async (
 // Get a recipe by ID
 const getRecipeById = async (userID: string) => {
   const response = await axios.get(`${RECIPE_URL}/savedRecipes/${userID}`);
+  console.log("response.data2", response.data);
+
   return response.data;
 };
 
 // Get saved recipes
 const getRecipesByUserId = async (userID: string, token: string) => {
-  const response = await axios.get(
-    `${RECIPE_URL}/savedRecipes/ids/${userID}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+  const response = await axios.get(`${RECIPE_URL}/savedRecipes/ids/${userID}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  console.log("response.data", response);
 
-  return response.data;
+  return response.data?.savedRecipes;
 };
-
 
 // Update a recipe
 const updateRecipe = async (
@@ -110,7 +109,6 @@ const deleteRecipe = async (recipeID: string, token: string) => {
   });
   return response.data;
 };
-
 
 const recipeService = {
   getAllRecipes,

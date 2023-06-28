@@ -12,9 +12,9 @@ const Index = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const avatar = user?.avatar;
-  // const token = user?.token;
-  const admin = user?.isAdmin;
+  const avatar = user?.result?.avatar;
+  const admin = user?.result?.isAdmin;
+  const userSavedRecipes = user?.result?.savedRecipes as string[];
 
   const handleLogout = () => {
     dispatch(logout());
@@ -65,13 +65,18 @@ const Index = () => {
             to='/saved-recipes'
             className='nav-link px-2 link-secondary position-relative'
           >
-            Saved-Recipes
+            Saved-Recipes{" "}
+            {userSavedRecipes?.length > 0 && (
+              <span className='badge rounded-pill bg-danger'>
+                {userSavedRecipes?.length}
+              </span>
+            )}
           </Link>
         </li>
       </ul>
 
       <span className='link-info'>
-        {user?.name && uperCaseFirstLetter(user.name)}
+        {user?.result?.name && uperCaseFirstLetter(user?.result?.name)}
       </span>
 
       {/* Dropdown */}
@@ -110,8 +115,7 @@ const Index = () => {
                   Add Recipe
                 </Link>
               </li>
-              <li>
-              </li>
+              <li></li>
               {admin && (
                 <li>
                   <Link to='/add-category' className='dropdown-item'>

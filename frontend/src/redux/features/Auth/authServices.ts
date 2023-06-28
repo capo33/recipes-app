@@ -28,10 +28,22 @@ const logout = () => {
   localStorage.removeItem("user");
 };
 
+// get user
+const getUserProfile = async (token: string) => {
+  const response = await axios.get(`${AUTH_URL}/profile`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.data;
+};
+
 const authServices = {
   register,
   login,
   logout,
+  getUserProfile,
 };
 
 export default authServices;

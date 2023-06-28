@@ -27,7 +27,7 @@ const AddRecipe = () => {
     category: { _id: "", name: "", image: "", slug: "" },
 
     owner: {
-      _id: user?._id as string,
+      _id: user?.result?._id as string,
     },
   };
   const [recipe, setRecipe] = useState<Recipe>(recipeData);

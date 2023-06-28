@@ -5,8 +5,7 @@ import { Link } from "react-router-dom";
 
 const AllCategories = () => {
   const { categories } = useAppSelector((state) => state.category);
-  console.log(categories);
-
+ 
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(getAllCategories());

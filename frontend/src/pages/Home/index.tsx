@@ -14,7 +14,7 @@ const Index = () => {
   const dispatch = useAppDispatch();
 
   const token = user?.token;
-  const userID = user?._id;
+  const userID = user?.result?._id;
 
   return (
     <>

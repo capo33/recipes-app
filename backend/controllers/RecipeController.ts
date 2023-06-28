@@ -10,7 +10,9 @@ import { IRecipe } from "../interfaces/recipeInterface";
 // @access  Public
 const getAllRecipes = async (req: Request, res: Response) => {
   try {
-    const recipes = await RecipeModel.find({}).populate("owner", "name").populate('category', 'name')
+    const recipes = await RecipeModel.find({})
+      .populate("owner", "name")
+      .populate("category", "name");
     res.status(200).json(recipes);
   } catch (error: unknown | any) {
     res.status(500).json({ message: error.message });
@@ -125,10 +127,124 @@ const deleteRecipe = async (req: Request, res: Response) => {
   }
 };
 
+// @desc    Save a recipe
+// @route   POST /api/v1/recipes/saveRecipe
+// @access  Private
+const saveRecipe = async (req: Request, res: Response) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const recipe = await RecipeModel.findById(req.body.recipeID);
+    const user = await UserModel.findById(req.body.userID);
+
+    if (!recipe) {
+      return res.status(404).json({ message: "Recipe not found" });
+    }
+
+    // Check if the recipe is already saved
+    const isSaved = user?.savedRecipes.includes(recipe._id);
+    if (isSaved) {
+      return res.status(400).json({ message: "Recipe already saved" });
+    }
+
+    // Save the recipe
+    await UserModel.findByIdAndUpdate(req.body.userID, {
+      $push: { savedRecipes: recipe._id },
+    });
+
+    // user?.savedRecipes.push(recipe._id);
+
+    // await user?.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Recipe saved successfully",
+      savedRecipes: user?.savedRecipes,
+    });
+  } catch (error: unknown | any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// @desc    Unsave a recipe
+// @route   POST /api/v1/recipes/unsaveRecipe
+// @access  Private
+const unsaveRecipe = async (req: Request, res: Response) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+    const recipe = await RecipeModel.findById(req.body.recipeID);
+    const user = await UserModel.findById(req.body.userID);
+
+    if (!recipe) {
+      return res.status(404).json({ message: "Recipe not found" });
+    }
+
+    // Check if the recipe is already saved
+    const isUnsaved = user?.savedRecipes.includes(recipe._id);
+
+    if (!isUnsaved) {
+      return res.status(400).json({ message: "Recipe not saved" });
+    }
+
+    // Unsave the recipe
+    await UserModel.findByIdAndUpdate(req.body.userID, {
+      $pull: { savedRecipes: recipe._id },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Recipe unsaved successfully",
+    });
+  } catch (error: unknown | any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// @desc    Get recipes by user
+// @route   GET /api/v1/recipes/savedRecipes/:userId
+// @access  Public
+const getRecipesByUser = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params; // user id
+    const user = await UserModel.findById(id)
+      .populate("savedRecipes")
+      .select("-password");
+
+    res.status(201).json(user?.savedRecipes);
+  } catch (error: unknown | any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// @desc    Get saved recipes
+// @route   GET /api/v1/recipes/savedRecipes/ids/:id
+// @access  Private
+const getSavedRecipes = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params; // user id
+
+    const user = await UserModel.findById(id)
+      .populate("savedRecipes")
+      .select("-password");
+
+    res.status(200).json({ savedRecipes: user?.savedRecipes });
+  } catch (error: unknown | any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 export {
   getAllRecipes,
   getRecipeById,
   createRecipe,
   updateRecipe,
   deleteRecipe,
+  saveRecipe,
+  unsaveRecipe,
+  getRecipesByUser,
+  getSavedRecipes,
 };

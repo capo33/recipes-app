@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 
 import UserModel from "../models/User";
+import RecipeModel from "../models/Recipe";
 import { generateToken } from "../utils/generateToken";
 
 // @desc    Register user
@@ -116,10 +117,15 @@ const logout = async (req: Request, res: Response) => {
 const getProfile = async (req: Request, res: Response) => {
   try {
     const user = await UserModel.findById(req.user?._id).select("-password");
+    const recipe = await RecipeModel.find({ owner: req.user?._id }).populate(
+      "owner",
+      "-password"
+    );
 
+    user?.set({ recipes: recipe });
     // check user existince
     if (!user) {
-      return res.status(404).json({ msg: "User not found" });
+      return res.status(404).json({ msg: "User not found" })
     }
 
     // generate token

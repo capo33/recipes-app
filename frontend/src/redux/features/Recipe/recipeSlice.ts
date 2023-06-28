@@ -78,6 +78,9 @@ export const getSavedRecipes = createAsyncThunk(
   async ({ userID, token }: { userID: string; token: string }, thunkAPI) => {
     try {
       const response = await recipeServices.getRecipesByUserId(userID, token);
+      // const response = await recipeServices.getRecipeById(userID);
+      console.log('response', response);
+      
       return response;
     } catch (error: unknown | any) {
       return thunkAPI.rejectWithValue(error.response.data.message);
@@ -99,6 +102,7 @@ export const saveRecipe = createAsyncThunk(
     try {
       const response = await recipeServices.saveRecipe(recipeID, userID, token);
       thunkAPI.dispatch(getSavedRecipes({ userID, token }));
+       
       return response?.data?.savedRecipes;
     } catch (error: unknown | any) {
       return thunkAPI.rejectWithValue(error.response.data.message);
