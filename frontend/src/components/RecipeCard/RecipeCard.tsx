@@ -1,16 +1,11 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { BiCalendar } from "react-icons/bi";
+import { AiOutlineEye } from "react-icons/ai";
 
-import {
-  getSavedRecipes,
-  saveRecipe,
-  unsaveRecipe,
-} from "../../redux/features/Recipe/recipeSlice";
 import { formatDate, subStringFunc } from "../../utils";
 import { Recipe } from "../../interfaces/RecipeInterface";
 import { userProfile } from "../../redux/features/Auth/authSlice";
-import { AiOutlineEye, AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { useAppSelector, useAppDispatch } from "../../redux/app/store";
 
 type RecipeCardProps = {
@@ -30,28 +25,7 @@ const RecipeCard = ({ recipe }: RecipeCardProps) => {
 
   useEffect(() => {
     dispatch(userProfile(token));
-    dispatch(getSavedRecipes({ userID, token }));
   }, [dispatch, token, userID]);
-
-  const handleSaveRecipe = (recipeID: string) => {
-    dispatch(
-      saveRecipe({
-        recipeID,
-        userID,
-        token,
-      })
-    );
-  };
-
-  const handleUnsaveRecipe = (recipeID: string) => {
-    dispatch(
-      unsaveRecipe({
-        recipeID,
-        userID,
-        token,
-      })
-    );
-  };
 
   return (
     <div className='col-md-6 col-lg-4 g-2'>
@@ -64,20 +38,10 @@ const RecipeCard = ({ recipe }: RecipeCardProps) => {
             <Link to={`/recipe/${recipe._id}`} className='card_link'>
               <h4>{recipe.name}</h4>
             </Link>
-            <div
-              onClick={() => {
-                recipesIDs?.includes(recipe._id)
-                  ? handleUnsaveRecipe(recipe._id as string)
-                  : handleSaveRecipe(recipe._id as string);
-              }}
-              style={{ cursor: "pointer" } as React.CSSProperties}
-            >
-              {recipesIDs?.includes(recipe._id) ? (
-                <AiFillHeart style={{ fontSize: "1.2rem" }} />
-              ) : (
-                <AiOutlineHeart style={{ fontSize: "1.2rem" }} />
-              )}
-            </div>
+
+            {recipesIDs?.includes(recipe._id) && (
+              <span className='badge rounded-pill text-bg-warning'>Saved</span>
+            )}
           </div>
           <p>{subStringFunc(recipe.instructions, 20)}</p>
 

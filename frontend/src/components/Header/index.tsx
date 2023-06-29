@@ -1,21 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { uperCaseFirstLetter } from "../../utils";
 import { logout } from "../../redux/features/Auth/authSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/app/store";
+import { getSavedRecipes } from "../../redux/features/Recipe/recipeSlice";
 
 const Index = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { user } = useAppSelector((state) => state.auth);
+  const { savedRecipes } = useAppSelector((state) => state.recipe);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const avatar = user?.result?.avatar;
   const admin = user?.result?.isAdmin;
-  const userSavedRecipes = user?.result?.savedRecipes as string[];
-
+ 
+  useEffect(() => {
+    dispatch(
+      getSavedRecipes({
+        userID: user?.result?._id as string,
+        token: user?.token as string,
+      })
+    );
+  }, [dispatch, user?.result?._id, user?.token]);
   const handleLogout = () => {
     dispatch(logout());
     navigate("/login");
@@ -66,9 +75,9 @@ const Index = () => {
             className='nav-link px-2 link-secondary position-relative'
           >
             Saved-Recipes{" "}
-            {userSavedRecipes?.length > 0 && (
+            {savedRecipes?.length > 0 && (
               <span className='badge rounded-pill bg-danger'>
-                {userSavedRecipes?.length}
+                {savedRecipes?.length}
               </span>
             )}
           </Link>

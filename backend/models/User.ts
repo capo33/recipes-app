@@ -27,7 +27,7 @@ const userSchema = new Schema<IUser>(
     },
     about: {
       type: String,
-      default: "example: I am a photographer",
+      default: "no bio yet",
     },
     isAdmin: {
       type: Boolean,
