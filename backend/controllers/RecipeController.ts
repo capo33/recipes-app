@@ -26,10 +26,9 @@ const getRecipeById = async (req: Request, res: Response) => {
   try {
     const { recipeId } = req.params;
 
-    const recipe = await RecipeModel.findById(recipeId).populate(
-      "owner",
-      "-password"
-    );
+    const recipe = await RecipeModel.findById(recipeId)
+      .populate("owner", "-password")
+      .populate("category", "name");
 
     if (!recipe) {
       return res.status(404).json({ message: "Recipe not found" });
@@ -198,6 +197,8 @@ const unsaveRecipe = async (req: Request, res: Response) => {
     res.status(200).json({
       success: true,
       message: "Recipe unsaved successfully",
+      savedRecipes:  user?.savedRecipes,
+
     });
   } catch (error: unknown | any) {
     res.status(500).json({ message: error.message });

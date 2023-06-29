@@ -7,6 +7,7 @@ import Header from "./components/Header";
 import AddCategory from "./pages/Category/AddCategory";
 import Categories from "./components/Categories/Categories";
 import AddRecipe from "./pages/Recipe/AddRecipe";
+import RecipeDetails from "./pages/Recipe/RecipeDetails";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path='/add-category' element={<AddCategory />} />
           <Route path='/add-recipe' element={<AddRecipe />} />
           <Route path='/categories' element={<Categories />} />
+          <Route path='/recipe/:id' element={<RecipeDetails />} />
 
           {/* <Route path='/register' element={<Register />} />
         <Route path='/add-recipe' element={<AddRecipe />} />

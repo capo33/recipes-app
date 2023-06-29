@@ -45,6 +45,25 @@ export const getAllRecipes = createAsyncThunk(
   }
 );
 
+// Get a recipe by id
+export const getSingleRecipe = createAsyncThunk(
+  "recipe/getSingleRecipe",
+  async (recipeId: string, { rejectWithValue }) => {
+    try {
+      const response = await recipeServices.getSingleRecipe(recipeId);
+      return response;
+    } catch (error: unknown | any) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return rejectWithValue(message);
+    }
+  }
+);
+
 // Create a recipe
 export const createRecipe = createAsyncThunk<Recipe, CreateRecipe>(
   "recipe/createRecipe",
@@ -79,8 +98,8 @@ export const getSavedRecipes = createAsyncThunk(
     try {
       const response = await recipeServices.getRecipesByUserId(userID, token);
       // const response = await recipeServices.getRecipeById(userID);
-      console.log('response', response);
-      
+      console.log("getsavedRecipe", response);
+
       return response;
     } catch (error: unknown | any) {
       return thunkAPI.rejectWithValue(error.response.data.message);
@@ -102,8 +121,9 @@ export const saveRecipe = createAsyncThunk(
     try {
       const response = await recipeServices.saveRecipe(recipeID, userID, token);
       thunkAPI.dispatch(getSavedRecipes({ userID, token }));
-       
-      return response?.data?.savedRecipes;
+      // console.log("savedRecipe", response); response is the saved recipe
+
+      return response;
     } catch (error: unknown | any) {
       return thunkAPI.rejectWithValue(error.response.data.message);
     }
@@ -129,7 +149,9 @@ export const unsaveRecipe = createAsyncThunk(
       );
 
       thunkAPI.dispatch(getSavedRecipes({ userID, token }));
-      return response?.data?.savedRecipes;
+      // console.log("response", response); response is the unsaved recipe
+
+      return response;
     } catch (error: unknown | any) {
       return thunkAPI.rejectWithValue(error.response.data.message);
     }
@@ -154,6 +176,22 @@ const recipeSlice = createSlice({
       state.recipes = payload;
     });
     builder.addCase(getAllRecipes.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.message = payload as string;
+    });
+
+    // Get a recipe by id
+    builder.addCase(getSingleRecipe.pending, (state) => {
+      state.isLoading = true;
+    });
+
+    builder.addCase(getSingleRecipe.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.isSuccess = true;
+      state.recipe = payload as Recipe;
+    });
+    builder.addCase(getSingleRecipe.rejected, (state, { payload }) => {
       state.isLoading = false;
       state.isError = true;
       state.message = payload as string;
@@ -220,21 +258,21 @@ const recipeSlice = createSlice({
     });
 
     // Upload images
-  //   builder.addCase(uploadImages.pending, (state) => {
-  //     state.isLoading = true;
-  //   });
-  //   builder.addCase(uploadImages.fulfilled, (state, { payload }) => {
-  //     console.log(payload);
+    //   builder.addCase(uploadImages.pending, (state) => {
+    //     state.isLoading = true;
+    //   });
+    //   builder.addCase(uploadImages.fulfilled, (state, { payload }) => {
+    //     console.log(payload);
 
-  //     state.isLoading = false;
-  //     state.isSuccess = true;
-  //     state.recipes = payload;
-  //   });
-  //   builder.addCase(uploadImages.rejected, (state, { payload }) => {
-  //     state.isLoading = false;
-  //     state.isError = true;
-  //     state.message = payload as string;
-  //   });
+    //     state.isLoading = false;
+    //     state.isSuccess = true;
+    //     state.recipes = payload;
+    //   });
+    //   builder.addCase(uploadImages.rejected, (state, { payload }) => {
+    //     state.isLoading = false;
+    //     state.isError = true;
+    //     state.message = payload as string;
+    //   });
   },
 });
 
