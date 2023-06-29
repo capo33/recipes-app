@@ -1,0 +1,13 @@
+ 
+.recipe-info {
+  display: flex;
+  align-items: center;
+}
+.recipe-info__img img {
+  height: 150px;
+  width: 150px;
+  max-width: 100%;
+  object-fit: cover;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}

@@ -9,13 +9,13 @@ import {
   getSingleRecipe,
   saveRecipe,
   unsaveRecipe,
-} from "../../redux/features/Recipe/recipeSlice";
-import { useAppDispatch, useAppSelector } from "../../redux/app/store";
-import { getAllCategories } from "../../redux/features/Category/categorySlice";
+} from "../../../redux/features/Recipe/recipeSlice";
+import { useAppDispatch, useAppSelector } from "../../../redux/app/store";
+import { getAllCategories } from "../../../redux/features/Category/categorySlice";
 
 import "./recipeDetails.css";
-import Button from "../../components/Button/Button";
-import { userProfile } from "../../redux/features/Auth/authSlice";
+import Button from "../../../components/Button/Button";
+import { userProfile } from "../../../redux/features/Auth/authSlice";
 
 const RecipeDetails = () => {
   const { id } = useParams<{ id: string }>();

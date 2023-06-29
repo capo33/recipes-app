@@ -231,13 +231,13 @@ const getSavedRecipes = async (req: Request, res: Response) => {
     const user = await UserModel.findById(id)
       .populate("savedRecipes")
       .select("-password");
-
+    
     res.status(200).json({ savedRecipes: user?.savedRecipes });
   } catch (error: unknown | any) {
     res.status(500).json({ message: error.message });
   }
 };
-
+ 
 export {
   getAllRecipes,
   getRecipeById,
